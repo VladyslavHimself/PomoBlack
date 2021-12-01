@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import classes from './App.module.scss';
+import { TimerButton } from './components/Ui/TimerButton/TimerButton';
 import { Timer } from './services/TimerAPI/Timer.service';
 
 const App = () => {
@@ -18,7 +19,7 @@ const App = () => {
   }, [minutes, seconds, isTimerStarted])
 
   const onStartTimerHandler = () => {
-    setIsTimerStarted(!isTimerStarted);
+    setIsTimerStarted(prevState => !prevState);
   }
 
   return (
@@ -26,7 +27,7 @@ const App = () => {
       <span className={classes.timer}>
         <span>{minutes < 10 ? (0) : null}{minutes}</span>:<span>{seconds < 10 ? (0) : null}{seconds}</span>
       </span>
-      <button className={classes['start-button']} onClick={onStartTimerHandler}>Start timer</button>
+      <TimerButton onClickHandler={onStartTimerHandler} timerStatus={isTimerStarted}/>
     </div>
   );
 }
