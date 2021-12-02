@@ -4,6 +4,8 @@
   border-radius: 100%;
   border: none;
   background-color: #f4f4f4;
+  cursor: pointer;
+  transition: .4s ease;
 
   &__play-icon {
     position: relative;
@@ -26,6 +28,15 @@
     height: 25px;
     background-color: #333;
     clip-path: polygon(0 2%, 0% 100%, 100% 50%);
+  }
+
+  &:hover {
+    background-color: #f4f4f4d5;
+  }
+
+  &:active {
+    transition: 0.1s !important;
+    background-color: #f4f4f448;
   }
 }
 
