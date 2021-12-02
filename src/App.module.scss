@@ -14,6 +14,7 @@
   font-size: 42px;
   font-family: 'Caveat Brush', sans-serif;
   letter-spacing: 10px;
+  cursor: default;
 }
 
 .heading {
@@ -22,6 +23,7 @@
   font-family: 'Dancing Script', sans-serif;
   letter-spacing: 0.08em;
   color: #f4f4f4;
+  cursor: default;
 }
 
 .quote {
@@ -36,6 +38,10 @@
   letter-spacing: 0.155em;
 
   color: #FFFFFF;
+
+  &::selection {
+    background-color: rgba(59, 59, 59, 0.671) !important;
+  }
 }
 
 .start-button {
