@@ -23,10 +23,14 @@ const App = () => {
 
   const timer = new Timer();
 
-  useEffect(() => {
+  const setQuoteForCurrentSession = (): void => {
     const randomId = Math.floor(Math.random() * jsonQuotes.quotes.length);
     const quote = jsonQuotes.quotes[randomId];
     setQuote(quote.quote);
+  }
+
+  useEffect(() => {
+    setQuoteForCurrentSession();
   }, []);
 
   useEffect(() => {
