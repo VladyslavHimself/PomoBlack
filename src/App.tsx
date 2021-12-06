@@ -16,8 +16,8 @@ interface IQuote {
 }
 
 const App = () => {
-  const [minutes, setMinutes] = useState<number>(25);
-  const [seconds, setSeconds] = useState<number>(0);
+  const [minutes, setMinutes] = useState<number>(0);
+  const [seconds, setSeconds] = useState<number>(3);
   const [isTimerStarted, setIsTimerStarted] = useState<boolean>(false);
   const [quote, setQuote] = useState<string>();
 
@@ -29,13 +29,22 @@ const App = () => {
     setQuote(quote.quote);
   }
 
+  const setSessionStorageTimerCounter = (): void => {
+    sessionStorage.setItem('timerValue', '0');
+  }
+
   useEffect(() => {
     setQuoteForCurrentSession();
+    setSessionStorageTimerCounter();
   }, []);
+
+  const refreshTimer = (): void => {
+    setIsTimerStarted(!isTimerStarted);
+  }
 
   useEffect(() => {
     if (isTimerStarted) {
-     minutes <= 0 && seconds <= 0 ? setIsTimerStarted(!isTimerStarted)
+     minutes <= 0 && seconds <= 0 ? refreshTimer()
      : timer.tick(seconds, minutes, setSeconds, setMinutes);
     }
   }, [minutes, seconds, isTimerStarted])
