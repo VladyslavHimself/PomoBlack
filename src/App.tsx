@@ -16,8 +16,8 @@ interface IQuote {
 }
 
 const App = () => {
-  const [minutes, setMinutes] = useState<number>(0);
-  const [seconds, setSeconds] = useState<number>(3);
+  const [minutes, setMinutes] = useState<number>(25);
+  const [seconds, setSeconds] = useState<number>(0);
   const [isTimerStarted, setIsTimerStarted] = useState<boolean>(false);
   const [quote, setQuote] = useState<string>();
 
@@ -30,7 +30,7 @@ const App = () => {
   }
 
   const setSessionStorageTimerCounter = (): void => {
-    sessionStorage.setItem('timerValue', '0');
+    sessionStorage.setItem('timerValue', '1');
   }
 
   useEffect(() => {
@@ -38,13 +38,39 @@ const App = () => {
     setSessionStorageTimerCounter();
   }, []);
 
-  const refreshTimer = (): void => {
+  const getTimerCounterAndUpdateLocally = (): number => {
+    let timerValue = Number(sessionStorage.getItem('timerValue'));
+    return timerValue += 1;
+  };
+
+  const updateTimerCounterGlobally = (timerValue: number): void => {
+    sessionStorage.setItem('timerValue', timerValue.toString());
+  }
+
+  const updateTimerValues = (timerValue: number, focusTime: number, breakTime: number): void => {
+    if (timerValue % 2 === 0) {
+      setMinutes(5);
+      setSeconds(0);
+    } else {
+      setMinutes(25);
+      setSeconds(0);
+    }
+  } 
+
+  const runRefreshTimerAlgorithm = (): void => {
+
+    const FOCUS_TIME_BY_DEFAULT = 25;
+    const BREAK_TIME_BY_DEFAULT = 5;
+
     setIsTimerStarted(!isTimerStarted);
+    const timerValue = getTimerCounterAndUpdateLocally();
+    updateTimerCounterGlobally(timerValue);
+    updateTimerValues(timerValue, FOCUS_TIME_BY_DEFAULT, BREAK_TIME_BY_DEFAULT);
   }
 
   useEffect(() => {
     if (isTimerStarted) {
-     minutes <= 0 && seconds <= 0 ? refreshTimer()
+     minutes <= 0 && seconds <= 0 ? runRefreshTimerAlgorithm()
      : timer.tick(seconds, minutes, setSeconds, setMinutes);
     }
   }, [minutes, seconds, isTimerStarted])
